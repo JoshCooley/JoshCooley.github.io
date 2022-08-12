@@ -1,1 +1,33 @@
-foobar
+<!doctype html>
+  <html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Poems</title>
+  </head>
+  <body>
+    <div id="content"></div>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+    const poems = [
+      "get_outta_here,_you!.md",
+      "it_does_no_good_in_the_house.md",
+      "mountain_and_pen.md",
+      "no_help_from_tap_or_grip.md",
+      ];
+    const random = Math.floor(Math.random() * poems.length);
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', `/${poems[random]}`, true);
+    xhr.responseType = 'text';
+    xhr.onload = () => {
+      if (xhr.readyState === xhr.DONE) {
+        if (xhr.status === 200) {
+          console.log(xhr.response);
+          document.getElementById('content').innerHTML = marked.parse(xhr.responseText);
+        }
+      }
+    };
+
+    xhr.send(null);
+  </script>
+</body>
+</html>
